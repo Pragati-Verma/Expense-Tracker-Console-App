@@ -8,7 +8,6 @@ namespace Expense_Tracker
 {
     public class Expense
     {
-        string rupeeSymbol = "\u20B9";
         private string Description { get; set; }
         private string Category { get; set; }
         private double Amount {  get; set; }
@@ -24,15 +23,9 @@ namespace Expense_Tracker
             Category = category;
             Amount = amount;
         }
-        //public void AddExpense(string description,string category, double amount)
-        //{
-        //    Description = description;
-        //    Category = category;
-        //    Amount = amount;
-        //}
+
         public void ViewExpenses(List<Expense> expense)
         {
-            //Console.WriteLine($"{Description}\t{Category}\tRs {Amount:0.00}");
             int i = 1;
             foreach(var item in expense)
             {

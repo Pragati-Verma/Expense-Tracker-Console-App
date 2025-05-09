@@ -3,17 +3,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Expense_Tracker
 {
-    public class NotStringInputException : FormatException
-    {
-        public NotStringInputException() : base() { }
-        public NotStringInputException(string message) : base(message) { }
-    }
-    public class  NegativeAmountException: Exception
-    {
-        public NegativeAmountException() : base() { }
-        public NegativeAmountException(string message) : base(message) { }
-    }
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -38,13 +28,21 @@ namespace Expense_Tracker
                             try
                             {
                                 Console.Write("Enter description: ");
-                                string description = Console.ReadLine();
+                                string? description = Console.ReadLine();
+                                if (description == string.Empty)
+                                {
+                                    throw new FormatException("Description cannot be empty. Try again!");
+                                }
                                 if (Regex.IsMatch(description, @"\d"))
                                 {
                                     throw new NotStringInputException("Number not allowed in expense description");
                                 }
                                 Console.Write("Enter category: ");
-                                string category = Console.ReadLine();
+                                string? category = Console.ReadLine();
+                                if(category == string.Empty)
+                                {
+                                    throw new FormatException("Category cannot be empty. Try again!");
+                                }
                                 if (Regex.IsMatch(category, @"\d"))
                                 {
                                     throw new NotStringInputException("Number not allowed in expense category");
@@ -56,6 +54,8 @@ namespace Expense_Tracker
                                     throw new NegativeAmountException("Amount cannot be less than zero");
                                 }
                                 expensesList.Add(new Expense(description, category, amount));
+                                Console.WriteLine();
+                                expense.ViewExpenses(expensesList);
                                 Console.WriteLine();
                             }
                             catch (NotStringInputException ex)
@@ -81,9 +81,9 @@ namespace Expense_Tracker
                 }
                 catch (FormatException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Invalid choice entered");
                 }
-                Console.WriteLine("");
+                Console.WriteLine();
             } while(true);
         }
     }
